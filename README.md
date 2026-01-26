@@ -1,4 +1,4 @@
-# TradeConnect
+# Backend
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.betopialimited.com/ai-stream/tradeconnect.git
+git remote add origin https://gitlab.betopialimited.com/join-venture-ai/bizconnect-webstie/backend.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.betopialimited.com/ai-stream/tradeconnect/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.betopialimited.com/join-venture-ai/bizconnect-webstie/backend/-/settings/integrations)
 
 ## Collaborate with your team
 
