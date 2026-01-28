@@ -154,7 +154,7 @@ class BranchLocation(BaseModel):
     business_profile = models.ForeignKey(
         BusinessProfile,
         on_delete=models.CASCADE,
-        related_name='branch_locations'-
+        related_name='branch_locations'
     )
     full_name = models.CharField(max_length=255, blank=True, null=True)
     address = models.TextField()
