@@ -19,13 +19,10 @@ from .views import (
     ExportBusinessesCSVAPIView,
     BusinessDashboardAPIView,
     IncreaseProfileViewAPIView,
-<<<<<<< HEAD
-    GalleryBulkUploadAPIView
-=======
+    GalleryBulkUploadAPIView,
     RecentlyViewedBusinessAPIView,
     SuperAdminDashboardAPIView,
     ExportBusinessesCSVAPIView
->>>>>>> 3c0213fcf1aa38e8e989a8fbeed31282cccf65fa
 )
 
 app_name = 'business'
