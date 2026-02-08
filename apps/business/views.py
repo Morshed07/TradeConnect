@@ -566,6 +566,7 @@ class SuperAdminDashboardAPIView(APIView):
         latest_businesses_data = [
                 {
                     "id": b.id,
+                    "is_featured": b.is_featured,
                     "business_name": b.business_name,
                     "country": b.country.name if b.country else "N/A",
                     "last_login": (
