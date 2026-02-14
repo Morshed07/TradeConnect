@@ -151,7 +151,11 @@ class CreateBusinessWithUserSerializer(serializers.Serializer):
     # Change this to 'services' to match your request data
     services = serializers.CharField(required=False, allow_blank=True)
     about_business = serializers.CharField(required=False, allow_blank=True)
-
+    certifications = serializers.PrimaryKeyRelatedField(
+        queryset=Certification.objects.all(),
+        many=True,
+        required=False
+    )
     # ✅ MUST exist
     logo = serializers.ImageField(required=False, allow_null=True)
 
@@ -170,6 +174,7 @@ class CreateBusinessWithUserSerializer(serializers.Serializer):
         membership_valid_till = validated_data.pop('membership_valid_till', None)
         # 2. Pop the services string (matches the field name 'services')
         services_raw = validated_data.pop('services', '')
+        certifications = validated_data.pop('certifications', [])
 
         # 2. Create the User
         user = User.objects.create_user(
@@ -190,6 +195,10 @@ class CreateBusinessWithUserSerializer(serializers.Serializer):
             membership_valid_till=membership_valid_till,
             **validated_data
         )
+        
+        # ✅ Set ManyToMany AFTER object creation
+        if certifications:
+            business.certifications.set(certifications)
 
         if services_raw:
             service_names = [
