@@ -119,6 +119,7 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
             'logo',
             'gallery',
             'is_locked',
+            'is_featured',
             'created_at',
             'updated_at'
         ]
@@ -230,7 +231,6 @@ class UpdateBusinessProfileSerializer(serializers.ModelSerializer):
         child=serializers.CharField(),
         required=False
     )
-
     class Meta:
         model = BusinessProfile
         fields = [
@@ -245,6 +245,7 @@ class UpdateBusinessProfileSerializer(serializers.ModelSerializer):
             'membership_valid_till',
             'logo',
             'is_locked',
+            'is_featured',
         ]
 
     def update(self, instance, validated_data):
