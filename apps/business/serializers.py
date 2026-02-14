@@ -165,18 +165,17 @@ class CreateBusinessWithUserSerializer(serializers.Serializer):
         return value.lower()
 
     def create(self, validated_data):
-        # 1. Extract M2M and nested data
-        services_raw = validated_data.pop('service', '')
+        # Pop M2M fields FIRST
+        services_raw = validated_data.pop('services', None)
+        certifications = validated_data.pop('certifications', None)
+
         logo = validated_data.pop('logo', None)
         email = validated_data.pop('email')
         password = validated_data.pop('password')
         full_name = validated_data.pop('full_name', '')
         membership_valid_till = validated_data.pop('membership_valid_till', None)
-        # 2. Pop the services string (matches the field name 'services')
-        services_raw = validated_data.pop('services', '')
-        certifications = validated_data.pop('certifications', [])
 
-        # 2. Create the User
+        # Create user
         user = User.objects.create_user(
             email=email,
             password=password,
@@ -187,32 +186,33 @@ class CreateBusinessWithUserSerializer(serializers.Serializer):
             is_staff=False
         )
 
-        # 3. Create the Business Profile 
-        # (We do this BEFORE handling services so we have a business ID)
+        # Create business
         business = BusinessProfile.objects.create(
             user=user,
             logo=logo,
             membership_valid_till=membership_valid_till,
             **validated_data
         )
-        
-        # ✅ Set ManyToMany AFTER object creation
-        if certifications:
+
+        # ✅ Handle certifications (same pattern as update)
+        if certifications is not None:
             business.certifications.set(certifications)
 
-        if services_raw:
-            service_names = [
-                name.strip().title() 
-                for name in services_raw.split(',')
-                if name.strip()
-            ]
-
+        # ✅ Handle services
+        if services_raw is not None:
             service_objects = []
-            for name in service_names:
-                service_obj, _ = Service.objects.get_or_create(title=name)
-                service_objects.append(service_obj)
 
-            # Use .set() only AFTER the business instance is created
+            if services_raw:
+                service_names = [
+                    name.strip().title()
+                    for name in services_raw.split(',')
+                    if name.strip()
+                ]
+
+                for name in service_names:
+                    service_obj, _ = Service.objects.get_or_create(title=name)
+                    service_objects.append(service_obj)
+
             business.service.set(service_objects)
 
         return business
