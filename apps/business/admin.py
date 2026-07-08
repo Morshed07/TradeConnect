@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import (
     BusinessProfile,
     ContactPerson,
@@ -6,9 +7,18 @@ from .models import (
     Gallery
 )
 
-# Register your models here.
+@admin.register(BusinessProfile)
+class BusinessProfileAdmin(ModelAdmin):
+    pass
 
-admin.site.register(BusinessProfile)
-admin.site.register(ContactPerson)
-admin.site.register(BranchLocation)
-admin.site.register(Gallery)
+@admin.register(ContactPerson)
+class ContactPersonAdmin(ModelAdmin):
+    pass
+
+@admin.register(BranchLocation)
+class BranchLocationAdmin(ModelAdmin):
+    pass
+
+@admin.register(Gallery)
+class GalleryAdmin(ModelAdmin):
+    pass

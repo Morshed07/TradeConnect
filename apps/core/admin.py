@@ -1,6 +1,15 @@
 from django.contrib import admin
-from .models import *
-# Register your models here.
-admin.site.register(Country)
-admin.site.register(Service)
-admin.site.register(Certification)
+from unfold.admin import ModelAdmin
+from .models import Country, Service, Certification
+
+@admin.register(Country)
+class CountryAdmin(ModelAdmin):
+    pass
+
+@admin.register(Service)
+class ServiceAdmin(ModelAdmin):
+    pass
+
+@admin.register(Certification)
+class CertificationAdmin(ModelAdmin):
+    pass

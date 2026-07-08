@@ -58,6 +58,8 @@ CORS_ALLOWED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.customAdmin',
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -187,3 +189,89 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'account.User'
+
+from django.urls import reverse_lazy
+
+# ===========================
+#     Unfold Admin Config
+# ===========================
+UNFOLD = {
+    "SITE_TITLE": "TradeConnect",
+    "SITE_HEADER": "TradeConnect",
+    "SITE_SYMBOL": "bubble_chart",
+    "DASHBOARD_CALLBACK": "apps.customAdmin.dashboard.dashboard_callback",
+    "THEME": "dark",
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": "Navigation",
+                "items": [
+                    {
+                        "title": "Dashboard",
+                        "icon": "dashboard",
+                        "link": reverse_lazy("admin:index"),
+                        "active": lambda request: request.path == reverse_lazy("admin:index"),
+                    },
+                ],
+            },
+            {
+                "title": "Users",
+                "items": [
+                    {
+                        "title": "Users",
+                        "icon": "group",
+                        "link": reverse_lazy("admin:account_user_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Business",
+                "items": [
+                    {
+                        "title": "Business Profiles",
+                        "icon": "business_center",
+                        "link": reverse_lazy("admin:business_businessprofile_changelist"),
+                    },
+                    {
+                        "title": "Contact Persons",
+                        "icon": "contact_phone",
+                        "link": reverse_lazy("admin:business_contactperson_changelist"),
+                    },
+                    {
+                        "title": "Branch Locations",
+                        "icon": "location_on",
+                        "link": reverse_lazy("admin:business_branchlocation_changelist"),
+                    },
+                    {
+                        "title": "Galleries",
+                        "icon": "photo_library",
+                        "link": reverse_lazy("admin:business_gallery_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Core Data",
+                "items": [
+                    {
+                        "title": "Countries",
+                        "icon": "public",
+                        "link": reverse_lazy("admin:core_country_changelist"),
+                    },
+                    {
+                        "title": "Services",
+                        "icon": "settings_suggest",
+                        "link": reverse_lazy("admin:core_service_changelist"),
+                    },
+                    {
+                        "title": "Certifications",
+                        "icon": "verified",
+                        "link": reverse_lazy("admin:core_certification_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
+}
+

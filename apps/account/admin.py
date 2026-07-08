@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth import get_user_model
+from unfold.admin import ModelAdmin
 
 User = get_user_model()
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin):
+class UserAdmin(ModelAdmin, BaseUserAdmin):
     list_display = ['email', 'full_name', 'is_business', 'is_staff', 'is_superuser', 'created_at']
     list_filter = ['is_business', 'is_staff', 'is_superuser']  # Removed is_active
     search_fields = ['email', 'full_name']
